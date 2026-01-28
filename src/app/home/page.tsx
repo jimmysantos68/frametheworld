@@ -1,11 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import { Search, Bell, Bookmark } from "lucide-react";
+import { useState } from "react";
 
 export default function TravelStoryPage() {
+  const [activeTab, setActiveTab] = useState<"forYou" | "featured" | "frames">("forYou");
+
+  const isFrames = activeTab === "frames";
+
   return (
-    <div className="min-h-screen bg-gray-50 px-6 py-4">
+    <div className="min-h-screen backdrop-blur-3xl bg-blur-15 px-6 py-4">
+
       {/* Header */}
-      <header className="flex items-center justify-between mb-6">
+      <header className="flex items-center justify-between mb-6 border-b pb-4">
         <div className="flex items-center gap-3">
           <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold">
             ≡
@@ -17,15 +25,9 @@ export default function TravelStoryPage() {
         </div>
 
         <div className="flex items-center gap-4">
-          <button className="h-10 w-10 rounded-xl bg-white shadow flex items-center justify-center">
-            <Search className="h-5 w-5 text-gray-600" />
-          </button>
-          <button className="h-10 w-10 rounded-xl bg-white shadow flex items-center justify-center">
-            <Bell className="h-5 w-5 text-gray-600" />
-          </button>
           <div className="flex items-center gap-2">
             <Image
-              src="https://i.pravatar.cc/100"
+              src="/images/1.jpg"
               alt="User"
               width={36}
               height={36}
@@ -33,18 +35,43 @@ export default function TravelStoryPage() {
             />
             <span className="font-medium text-sm">Leo Denzin</span>
           </div>
+          <button className="h-10 w-10 rounded-xl bg-white shadow flex items-center justify-center">
+            <Search className="h-5 w-5 text-gray-600" />
+          </button>
+          <button className="h-10 w-10 rounded-xl bg-white shadow flex items-center justify-center">
+            <Bell className="h-5 w-5 text-gray-600" />
+          </button>
         </div>
       </header>
 
       {/* Story Slider */}
-      <section className="flex gap-4 overflow-x-auto pb-4 mb-6">
-        {[25, 15, 25, 15].map((item, i) => (
+      <section
+        className="
+          flex flex-nowrap gap-4 px-6 pb-4 mb-6
+          overflow-x-auto
+          overscroll-x-contain
+          scroll-smooth
+          snap-x snap-mandatory
+          [&::-webkit-scrollbar]:hidden
+          [-ms-overflow-style:none]
+          [scrollbar-width:none]
+        "
+      >
+        {[25, 15, 25, 15, 20].map((item, i) => (
           <div
             key={i}
-            className="min-w-[260px] h-[120px] rounded-2xl bg-gray-900 relative overflow-hidden shadow"
+            className="
+              shrink-0
+              snap-start
+              min-w-[343px] h-[120px]
+              rounded-4xl
+              bg-gray-900
+              relative overflow-hidden
+              shadow
+            "
           >
             <Image
-              src={`https://picsum.photos/400/300?random=${i}`}
+              src="/images/2.jpg"
               alt="Story"
               fill
               className="object-cover opacity-80"
@@ -59,37 +86,121 @@ export default function TravelStoryPage() {
 
       {/* Tabs */}
       <div className="flex justify-center gap-3 mb-8">
-        <button className="px-6 py-2 rounded-full bg-blue-500 text-white font-medium shadow">
+        <button
+          onClick={() => setActiveTab("forYou")}
+          className={`px-6 py-2 rounded-full font-medium shadow ${activeTab === "forYou"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-gray-600"
+            }`}
+        >
           For You
         </button>
-        <button className="px-6 py-2 rounded-full bg-gray-200 text-gray-600">
+
+        <button
+          onClick={() => setActiveTab("featured")}
+          className={`px-6 py-2 rounded-full font-medium shadow ${activeTab === "featured"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-gray-600"
+            }`}
+        >
           Featured
         </button>
-        <button className="px-6 py-2 rounded-full bg-gray-200 text-gray-600">
+
+        <button
+          onClick={() => setActiveTab("frames")}
+          className={`px-6 py-2 rounded-full font-medium shadow ${activeTab === "frames"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-gray-600"
+            }`}
+        >
           Frames
         </button>
       </div>
 
-      {/* Masonry Grid */}
-      <div className="columns-2 md:columns-3 lg:columns-4 gap-5 space-y-5">
-        {Array.from({ length: 14 }).map((_, i) => (
-          <div
-            key={i}
-            className="relative rounded-3xl overflow-hidden shadow bg-white"
-          >
-            <Image
-              src={`https://picsum.photos/500/700?random=${i + 10}`}
-              alt="Travel"
-              width={500}
-              height={700}
-              className="w-full h-auto object-cover"
-            />
-            <button className="absolute top-3 right-3 h-8 w-8 rounded-full bg-white/80 backdrop-blur flex items-center justify-center">
-              <Bookmark className="h-4 w-4 text-gray-700" />
-            </button>
+      {/* ====== FRAMES GRID (only when Frames clicked) ====== */}
+      {isFrames && (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pl-20">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <div
+              key={i}
+              className="relative overflow-hidden rounded-[49.26px] shadow-[0_10px_25px_rgba(0,0,0,0.35)] w-[254px] h-[254px]"
+            >
+              {/* Outer Image */}
+              <Image
+                src={`/images/${(i % 4) + 1}.jpg`}
+                alt="Frame"
+                fill
+                className="object-cover"
+              />
+
+              {/* Inner Frame Border (centered with inset) */}
+              <div className="absolute inset-6 rounded-[40px] border-4 border-black/40 overflow-hidden">
+                <Image
+                  src={`/images/${((i + 1) % 4) + 1}.jpg`}
+                  alt="Frame Inner"
+                  fill
+                  className="object-cover opacity-90"
+                />
+              </div>
+
+              {/* Inner shadow glow */}
+              <div className="absolute inset-0 rounded-[49.26px] shadow-[inset_0_0_0_8px_rgba(0,0,0,0.35)]" />
+
+              {/* ====== SMALL IMAGE BEHIND TEXT (CENTERED) ====== */}
+              <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
+                <div className="relative w-[170px] h-[170px] rounded-[30px] overflow-hidden border border-white/20">
+                  <Image
+                    src={`/images/${((i + 2) % 4) + 1}.jpg`}
+                    alt="Mini Frame"
+                    fill
+                    className="object-cover opacity-80"
+                  />
+                </div>
+              </div>
+
+              {/* Text */}
+              <div className="absolute inset-0 flex pt-34  flex-col  items-center text-white">
+                <div className="text-3xl font-bold">15+</div>
+                <div className="text-sm mt-1">Frame Name</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+
+
+
+      {/* Masonry Grid (default for other tabs) */}
+      {!isFrames && (
+        <div className="max-w-[1400px] mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-[120px] gap-6">
+            {Array.from({ length: 20 }).map((_, i) => {
+              const isTall = i % 5 === 0 || i % 7 === 0;
+
+              return (
+                <div
+                  key={i}
+                  className={`relative overflow-hidden rounded-[28px] bg-white shadow-xl hover:shadow-2xl transition
+                    ${isTall ? "row-span-2 " : "row-span-3"}`}
+                >
+                  <Image
+                    src={`/images/${(i % 4) + 1}.jpg`}
+                    alt="Travel"
+                    fill
+                    className="object-cover"
+                  />
+
+                  <button className="absolute top-3 right-3 h-9 w-9 rounded-full bg-white/80 backdrop-blur flex items-center justify-center shadow">
+                    <Bookmark className="h-4 w-4 text-gray-700" />
+                  </button>
+                </div>
+              );
+            })}
           </div>
-        ))}
-      </div>
+        </div>
+      )}
+
     </div>
   );
 }
