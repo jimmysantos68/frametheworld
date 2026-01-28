@@ -161,3 +161,13 @@
 .text-shadow {
   text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3); /* Adjust this as needed */
 }
+
+/* Add this to your global CSS */
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
