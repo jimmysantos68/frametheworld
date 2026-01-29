@@ -21,6 +21,8 @@ export default function CreateProfilePage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: send profile data (bio, companyName, companyLocation) to backend
+
+    router.push("/subscription");
   };
 
   const remaining = 250 - bio.length;
