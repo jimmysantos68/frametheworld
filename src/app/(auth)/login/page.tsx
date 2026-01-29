@@ -1,13 +1,36 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Toast } from "@/components/ui/toast";
 import Link from "next/link";
 import { Check } from "lucide-react";
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [toastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // TODO: add real authentication here
+    setToastMessage("Login successful");
+    setToastOpen(true);
+
+    router.push("/home");
+  };
+
   return (
     <div className="w-full max-w-[32em]">
+      <Toast
+        open={toastOpen}
+        message={toastMessage}
+        type="success"
+        onClose={() => setToastOpen(false)}
+      />
       <div className="rounded-2xl bg-white p-[4em] shadow-xl">
         {/* Title */}
         <h1 className="mb-2 text-3xl font-bold text-gray-900 text-center text-shadow">Login</h1>
@@ -23,7 +46,7 @@ export default function LoginPage() {
         </p>
 
         {/* Form */}
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           {/* Email */}
           <div>
             <Input
