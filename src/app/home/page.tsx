@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { Search, Bell, Bookmark } from "lucide-react";
+import { Bookmark } from "lucide-react";
 import { useState } from "react";
+import Header from "@/components/global/header";
 
 export default function TravelStoryPage() {
   const [activeTab, setActiveTab] = useState<"forYou" | "featured" | "frames">("forYou");
@@ -10,39 +11,11 @@ export default function TravelStoryPage() {
   const isFrames = activeTab === "frames";
 
   return (
-    <div className="min-h-screen backdrop-blur-3xl bg-blur-15 px-6 py-4">
+    <div className="min-h-screen backdrop-blur-3xl bg-blur-15">
+      {/* Sticky Header */}
+      <Header />
 
-      {/* Header */}
-      <header className="flex items-center justify-between mb-6 border-b pb-4">
-        <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold">
-            ≡
-          </div>
-          <div>
-            <h1 className="text-xl font-semibold">Today’s Travel Story</h1>
-            <p className="text-sm text-gray-500">300+ new memories for you</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <Image
-              src="/images/1.jpg"
-              alt="User"
-              width={36}
-              height={36}
-              className="rounded-full"
-            />
-            <span className="font-medium text-sm">Leo Denzin</span>
-          </div>
-          <button className="h-10 w-10 rounded-xl bg-white shadow flex items-center justify-center">
-            <Search className="h-5 w-5 text-gray-600" />
-          </button>
-          <button className="h-10 w-10 rounded-xl bg-white shadow flex items-center justify-center">
-            <Bell className="h-5 w-5 text-gray-600" />
-          </button>
-        </div>
-      </header>
+      <div className="px-6 py-4">
 
       {/* Story Slider */}
       <section
@@ -201,6 +174,7 @@ export default function TravelStoryPage() {
         </div>
       )}
 
+      </div>
     </div>
   );
 }
