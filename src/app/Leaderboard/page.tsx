@@ -2,47 +2,16 @@
 
 import Image from "next/image";
 import { Search, Bell, ArrowUp } from "lucide-react";
+import Header from './../../components/global/header';
 
 export default function TravelStoryPage() {
   return (
-    <div className="min-h-screen bg-[#f6f7fb] px-6">
+    <div className="min-h-screen backdrop-blur-3xl bg-blur-15">
+          {/* Sticky Header */}
+          <Header />
+    <div className="min-h-screen bg-[#f6f7fb] px-6">    
       <div className="mx-auto p-6">
-        {/* ================= HEADER ================= */}
-        <header className="flex items-center justify-between border-b pb-5">
-          <div className="flex items-center gap-4">
-            <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xl font-bold">
-              ≡
-            </div>
-            <div>
-              <h1 className="text-lg font-semibold">Today’s Explorers</h1>
-              <p className="text-sm text-gray-500">
-                Celebrate the travelers whose captures shine the most.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2">
-              <Image
-                src="/images/1.jpg"
-                alt="user"
-                width={34}
-                height={34}
-                className="rounded-full object-cover"
-              />
-              <span className="text-sm font-medium">Leo Denzin</span>
-              <span>🦊</span>
-            </div>
-
-            <button className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
-              <Search className="h-5 w-5 text-white" />
-            </button>
-
-            <button className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
-              <Bell className="h-5 w-5 text-white" />
-            </button>
-          </div>
-        </header>
+   
 
         {/* ================= TOP 3 ================= */}
         <div className="mt-8 flex justify-center items-end gap-12">
@@ -123,6 +92,7 @@ export default function TravelStoryPage() {
           ))}
         </div>
       </div>
+    </div>
     </div>
   );
 }
