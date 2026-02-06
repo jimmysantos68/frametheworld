@@ -62,7 +62,7 @@ export default function TravelStoryPage() {
         <button
           onClick={() => setActiveTab("forYou")}
           className={`px-6 py-2 rounded-full font-medium shadow ${activeTab === "forYou"
-              ? "bg-blue-500 text-white"
+              ? "bg-gradient-to-r from-[#6CACDF] to-[#0000FE] text-white"
               : "bg-gray-200 text-gray-600"
             }`}
         >
@@ -72,7 +72,7 @@ export default function TravelStoryPage() {
         <button
           onClick={() => setActiveTab("featured")}
           className={`px-6 py-2 rounded-full font-medium shadow ${activeTab === "featured"
-              ? "bg-blue-500 text-white"
+              ? "bg-gradient-to-r from-[#6CACDF] to-[#0000FE] text-white"
               : "bg-gray-200 text-gray-600"
             }`}
         >
@@ -82,7 +82,7 @@ export default function TravelStoryPage() {
         <button
           onClick={() => setActiveTab("frames")}
           className={`px-6 py-2 rounded-full font-medium shadow ${activeTab === "frames"
-              ? "bg-blue-500 text-white"
+              ? "bg-gradient-to-r from-[#6CACDF] to-[#0000FE] text-white"
               : "bg-gray-200 text-gray-600"
             }`}
         >
@@ -92,7 +92,7 @@ export default function TravelStoryPage() {
 
       {/* ====== FRAMES GRID (only when Frames clicked) ====== */}
       {isFrames && (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pl-20">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 pl-10">
           {Array.from({ length: 12 }).map((_, i) => (
             <div
               key={i}
