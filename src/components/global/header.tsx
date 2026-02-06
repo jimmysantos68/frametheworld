@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Home, BarChart3, Globe, Lock, Pin, Sparkles, Settings, LogOut, ChevronRight, FileText, Frame, FolderPlus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import NotificationModal from "./notification-modal";
+import { Plus } from "lucide-react";
 
 interface HeaderProps {
   title?: string;
@@ -15,9 +16,10 @@ interface HeaderProps {
 export default function Header({ title = "Today's Travel Story", subtitle = "300+ new memories for you" }: HeaderProps) {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-
+const [isFrameType, setIsFrameType] = useState<"public" | "private" | "personal" | null>(null);
   const megaMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -60,10 +62,10 @@ export default function Header({ title = "Today's Travel Story", subtitle = "300
 
   const sidebarItems = [
     { icon: Home, label: "Home", hasArrow: false, route: "/home" },
-    { icon: BarChart3, label: "Leader Board", hasArrow: false },
-    { icon: Globe, label: "Public frames", hasArrow: true },
-    { icon: Lock, label: "Private frames", hasArrow: true },
-    { icon: Pin, label: "Personal Storage", hasArrow: true },
+    { icon: BarChart3, label: "Leader Board", hasArrow: false, route: "/Leaderboard" },
+    { icon: Globe, label: "Public frames", hasArrow: true , func:()=> setIsFrameType("public") },
+    { icon: Lock, label: "Private frames", hasArrow: true , func:()=> setIsFrameType("private") },
+    { icon: Pin, label: "Personal Storage", hasArrow: true , func:()=> setIsFrameType("personal") },
     { icon: Sparkles, label: "AI Content generator", hasArrow: false },
     { icon: Settings, label: "Settings", hasArrow: false },
     { icon: LogOut, label: "Logout", hasArrow: false, isDestructive: true },
@@ -74,7 +76,44 @@ export default function Header({ title = "Today's Travel Story", subtitle = "300
     { image: "/images/icons/two.png", title: "Create Frames", subtitle: "Shared with everyone.", color: "bg-purple-100" },
     { image: "/images/icons/three.png", title: "Create Personal Storage", subtitle: "Save before posting.", color: "bg-blue-100" },
   ];
-
+ const frames = [
+    {
+      id: 1,
+      image: "/images/1.jpg", // Replace with your image URL
+      name: "Frame name here",
+    },
+    {
+      id: 2,
+      image: "/images/2.jpg", // Replace with your image URL
+      name: "Frame name here",
+    },
+    {
+      id: 3,
+      image: "/images/3.jpg", // Replace with your image URL
+      name: "Frame name here",
+    },
+    {
+      id: 4,
+      image: "/images/4.jpg", // Replace with your image URL
+      name: "Frame name here",
+    },
+    {
+      id: 3,
+      image: "/images/3.jpg", // Replace with your image URL
+      name: "Frame name here",
+    },
+    {
+      id: 1,
+      image: "/images/5.jpg", // Replace with your image URL
+      name: "Frame name here",
+    },
+    {
+      id: 2,
+      image: "/images/1.jpg", // Replace with your image URL
+      name: "Frame name here",
+    },
+    
+  ];
   return (
     <>
       {/* Backdrop Overlay */}
@@ -162,7 +201,7 @@ export default function Header({ title = "Today's Travel Story", subtitle = "300
       {isMenuOpen && (
         <div 
           ref={megaMenuRef}
-          className="fixed top-0 left-0 right-0 z-[60] bg-white rounded-b-3xl shadow-2xl border-b border-gray-200 animate-[slideDown_0.3s_ease-out]"
+          className="sticky top-0 left-0 right-0 z-[60] bg-white rounded-b-3xl shadow-2xl border-b border-gray-200 animate-[slideDown_0.3s_ease-out]"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex h-[30em]">
@@ -176,6 +215,9 @@ export default function Header({ title = "Today's Travel Story", subtitle = "300
                     if (item.route) {
                       router.push(item.route);
                       setIsMenuOpen(false);
+                    }
+                    if (item.func) {
+                      item.func();
                     }
                     // Menu stays open if no route is defined
                   };
@@ -243,6 +285,7 @@ export default function Header({ title = "Today's Travel Story", subtitle = "300
                   </div>
 
                   {/* User Profile on Right */}
+                 
                   <div className="flex-shrink-0">
                     <Image
                       src="/images/admin.png"
@@ -257,14 +300,134 @@ export default function Header({ title = "Today's Travel Story", subtitle = "300
 
                 </div>
               </div>
-              <div className="w-full flex justify-center items-center absolute bottom-0 left-30">
+
+               {isFrameType === "public" ? (
+               <div className=" flex flex-col justify-center items-center gap-4">
+                  <div className="flex justify-center items-center gap-6">
+
+                  {frames.map((frame) => (
+                    <div
+                    key={frame.id}
+                    className="shrink-0 flex flex-col items-center "
+                    >
+                {/* Image Container */}
+                <div className="relative w-[100px] h-[100px] rounded-[22px] overflow-hidden">
+                  <Image
+                    src={frame.image}
+                    alt={frame.name}
+                    fill
+                    className="object-cover"
+                    />
+                </div>
+
+                {/* Frame Name */}
+                <p className="mt-2 text-xs text-center text-black">
+                  {frame.name}
+                </p>
+              </div>
+                  ))}
+                  </div>
+                  <button
+  onClick={() => {
+    router.push("/Publicframes");
+    setIsMenuOpen(false);
+    setIsFrameType(null);
+  }}
+  className="w-[90px] text-[16px] font-[500] bg-[#F5F5F5] py-1 rounded-full"
+>
+  See All
+</button>
+                </div>
+                
+              )  : isFrameType === "private" ? (
+                <div className=" flex flex-col justify-center items-center gap-4">
+                  <div className="flex justify-center items-center gap-6">
+
+                  {frames.map((frame) => (
+                    <div
+                    key={frame.id}
+                    className="shrink-0 flex flex-col items-center "
+                    >
+                {/* Image Container */}
+                <div className="relative w-[100px] h-[100px] rounded-[22px] overflow-hidden">
+                  <Image
+                    src={frame.image}
+                    alt={frame.name}
+                    fill
+                    className="object-cover"
+                    />
+                </div>
+
+                {/* Frame Name */}
+                <p className="mt-2 text-xs text-center text-black">
+                  {frame.name}
+                </p>
+              </div>
+                  ))}
+                  </div>
+                  <button className="w-[90px] text-[16px] font-[500] text-center bg-[#F5F5F5]  py-1 rounded-full text-black">See All</button>
+                </div>
+
+               ): isFrameType === "personal" ? (
+                <div className=" flex flex-col justify-center items-center gap-4">
+                  <div className="flex justify-center items-center gap-6">
+
+                    {frames.map((frame) => (
+              <div
+                key={frame.id}
+                className="flex-shrink-0 flex flex-col items-center"
+              >
+                {/* Image Container with Lock */}
+                <div className="relative w-[120px] h-[120px] rounded-[24px] overflow-hidden shadow-[0_4px_10px_2px_rgba(0,0,0,0.25)]">
+                  <Image
+                    src={frame.image}
+                    alt={frame.name}
+                    fill
+                    className="object-cover"
+                  />
+
+                  {/* Dark Overlay */}
+                 
+                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                      {/* Lock Icon with Plus */}
+                      <div className="relative ">
+                        <div className="w-[70px] h-[70px] backdrop-blur-2xl rounded-full bg-white/20 flex items-center justify-center">
+                          <Image
+                            src="/images/solarlock.png"
+                            alt="Lock"
+                            width={40}
+                            height={40}
+                            className="object-contain w-10 h-10"
+                          />
+                       
+                          <Plus className="w-3 h-3 text-white stroke-3" />
+                       
+                        </div>
+                      </div>
+                    </div>
+              
+                </div>
+
+                {/* Frame Name */}
+                <p className="mt-2 text-xs text-center text-black font-medium">
+                  {frame.name}
+                </p>
+              </div>
+            ))}
+                  </div>
+                  <button  className="w-[90px] text-[16px] font-[500] text-center bg-[#F5F5F5]  py-1 rounded-full text-black">See All</button>
+                </div>
+               ): (
+                <div className="w-full flex justify-center items-center absolute bottom-0 left-30">
                 <Image
                   src="/images/menuimage.png"
                   alt="Notification"
                   height={860}
                   width={860}
                 />
-              </div>
+                
+                </div>
+              )}
 
             </div>
 
