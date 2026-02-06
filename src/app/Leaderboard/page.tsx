@@ -2,18 +2,19 @@
 
 import Image from "next/image";
 import { Search, Bell, ArrowUp } from "lucide-react";
+import Header from './../../components/global/header';
 import { useState } from "react";
-import Header from "@/components/global/header";
 
 export default function TravelStoryPage() {
   const [activeTab, setActiveTab] = useState<"upvotes" | "framed">("upvotes");
 
   return (
-    <div className="min-h-screen bg-[#f6f7fb] ">
-      <Header />
+    <div className="min-h-screen backdrop-blur-3xl bg-blur-15">
+          {/* Sticky Header */}
+          <Header />
+    <div className="min-h-screen bg-[#f6f7fb] px-6">    
       <div className="mx-auto p-6">
-        {/* ================= HEADER ================= */}
-       
+   
 
         {/* ================= TOP 3 ================= */}
         <div className="mt-8 flex justify-center items-end gap-12">
@@ -146,6 +147,7 @@ export default function TravelStoryPage() {
           )}
         </div>
       </div>
+    </div>
     </div>
   );
 }

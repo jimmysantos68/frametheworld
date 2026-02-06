@@ -1,29 +1,41 @@
 
 
-        "use client";
+  "use client";
 
 import Image from "next/image";
 import { useState } from "react";
 
 import { Bookmark, Grid, Image as ImageIcon, Lock, LockIcon } from "lucide-react";
+import Header from "@/components/global/header";
 
 export default function TravelStoryPage() {
  const [activeTab, setActiveTab] = useState<"posts" | "frames" | "space">(
     "posts"
   );
+  const [frameVisibility, setFrameVisibility] = useState("public");
+
 
   const isFrames = activeTab === "frames";
   const isPosts = activeTab === "posts";
     const isSpace = activeTab === "space";
 
-
+const badges = [
+  "/images/badge1.png",
+  "/images/badge2.png",
+  "/images/badge3.png",
+  "/images/badge4.png",
+];
 
   return (
+      <div className="min-h-screen bg-white text-[#1a1a1a] font-sans">
+          <Header />
     <div className="min-h-screen bg-white px-8 py-10 font-sans text-[#1a1a1a]">
+      
+      
       <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-12">
         
         {/* ================= LEFT PROFILE CARD ================= */}
-        <aside className="relative bg-[#f1f3f6] rounded-[40px] p-8 overflow-hidden shadow-sm h-fit">
+        <aside className="relative sticky top-20 bg-[#f1f3f6] rounded-[40px] p-8 overflow-hidden shadow-sm h-fit">
           {/* Decorative background "dots" and soft shapes like the image */}
           <div className="absolute top-4 left-4 w-2 h-2 bg-blue-500 rounded-full opacity-60" />
           <div className="absolute top-10 right-10 w-2 h-2 bg-blue-500 rounded-full opacity-60" />
@@ -31,8 +43,8 @@ export default function TravelStoryPage() {
           
           <div className="relative z-10 flex flex-col items-center">
             {/* Avatar with Blue Border */}
-           <div className="relative w-36 h-36 rounded-2xl p-1 bg-gradient-to-b from-blue-400 to-transparent">
-  <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-[#f1f3f6] bg-white">
+           <div className="relative w-36 h-36 rounded-[55px] p-1 bg-gradient-to-r from-[#6CACDF] to-[#0000FE]">
+  <div className="relative w-full h-full rounded-[55px] overflow-hidden border-4  ">
     <Image
       src="/images/1.jpg"
       alt="Leo Denzin"
@@ -56,7 +68,7 @@ export default function TravelStoryPage() {
             </div>
 
             {/* Stats Section */}
-            <div className="grid grid-cols-4 gap-2 w-full mt-4">
+            <div className="grid grid-cols-4 gap-2 max-w-lg mt-4">
               {[
                 { label: "Up votes", value: 350 },
                 { label: "Framed", value: 32 },
@@ -64,80 +76,117 @@ export default function TravelStoryPage() {
                 { label: "Frames", value: 64 },
               ].map((s) => (
                 <div key={s.label} className="flex flex-col items-center">
-                  <p className="text-blue-600 font-extrabold text-base">{s.value}</p>
-                  <p className="text-[10px] text-gray-400 font-semibold uppercase">{s.label}</p>
+                  <p className="text-blue-600 text-[20px] font-extrabold text-base">{s.value}</p>
+                  <p className="text-[16px] text-gray-400 font-medium ">{s.label}</p>
                 </div>
               ))}
             </div>
 
             {/* Achievements Section */}
-            <div className="w-full mt-10">
-              <h3 className="text-lg font-bold mb-5">Achivements</h3>
-              <div className="grid grid-cols-4 gap-y-6 gap-x-2">
-                {/* Simplified Badge Mapping */}
-                {[...Array(9)].map((_, i) => (
-                  <div key={i} className="flex flex-col items-center gap-2">
-                    <div className="relative w-12 h-12 flex items-center justify-center">
-                       {/* This represents the badge icons from your image */}
-                       {i < 3 ? (
-                         <div className="w-10 h-10 bg-orange-500 rounded-lg rotate-45 flex items-center justify-center shadow-lg">
-                            <div className="rotate-[-45deg] text-white text-[8px] font-bold">★★★</div>
-                         </div>
-                       ) : (
-                         <div className="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center shadow-inner">
-                           <Lock className="w-4 h-4 text-white" />
-                         </div>
-                       )}
-                    </div>
-                    <p className="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">Badge name</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+           <div className="w-full mt-10">
+  <h3 className="text-lg font-bold mb-5">Achievements</h3>
+
+  <div className="grid grid-cols-4 gap-y-6 gap-x-2">
+    {[...Array(9)].map((_, i) => {
+      const isUnlocked = i < badges.length;
+
+      return (
+        <div key={i} className="flex flex-col items-center gap-2">
+          <div className="relative w-12 h-12">
+            {isUnlocked ? (
+              <Image
+                src={badges[i]}
+                alt={`Badge ${i + 1}`}
+                fill
+                className="object-contain"
+              />
+            ) : (
+              <Image
+                src="/images/badge4.png" // optional locked image
+                alt="Locked badge"
+                fill
+                className="object-contain opacity-40"
+              />
+            )}
+          </div>
+
+          <p className="text-[9px] font-bold text-gray-400 uppercase tracking-tighter">
+            {isUnlocked ? "Badge name" : "Locked"}
+          </p>
+        </div>
+      );
+    })}
+  </div>
+</div>
           </div>
         </aside>
 
         {/* ================= RIGHT CONTENT AREA ================= */}
        {/* ================= RIGHT CONTENT ================= */}
         <section>
-          {/* Tabs */}
-          <div className="bg-[#e2e8f7] rounded-full flex mb-10 shadow-sm">
-            <button
-              onClick={() => setActiveTab("posts")}
-              className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-full text-sm font-bold transition
-                ${
-                  isPosts
-                    ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md"
-                    : "text-gray-400 hover:text-blue-500"
-                }`}
-            >
-              <ImageIcon className="w-4 h-4" /> Posts
-            </button>
+         <div className="bg-[#e2e8f7] rounded-full flex mb-10 shadow-sm">
+  <button
+    onClick={() => setActiveTab("posts")}
+    className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-full text-sm font-bold transition
+      ${
+        isPosts
+          ? "bg-gradient-to-r from-[#6CACDF] to-[#0000FE] text-white shadow-md"
+          : "text-gray-400 hover:text-blue-500"
+      }`}
+  >
+    <div className="relative w-4 h-4">
+      <Image
+        src="/images/posts.png"
+        alt="Posts"
+        fill
+        className="object-contain"
+      />
+    </div>
+    Posts
+  </button>
 
-            <button
-              onClick={() => setActiveTab("frames")}
-              className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-full text-sm font-bold transition
-                ${
-                  isFrames
-                    ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md"
-                    : "text-gray-400 hover:text-blue-500"
-                }`}
-            >
-              <Grid className="w-4 h-4" /> Frames
-            </button>
+  <button
+    onClick={() => setActiveTab("frames")}
+    className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-full text-sm font-bold transition
+      ${
+        isFrames
+          ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md"
+          : "text-gray-400 hover:text-blue-500"
+      }`}
+  >
+    <div className="relative w-4 h-4">
+      <Image
+        src="/images/frames.png"
+        alt="Frames"
+        fill
+        className="object-contain"
+      />
+    </div>
+    Frames
+  </button>
 
-            <button
-              onClick={() => setActiveTab("space")}
-              className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-full text-sm font-bold transition
-                ${
-                  activeTab === "space"
-                    ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md"
-                    : "text-gray-400 hover:text-blue-500"
-                }`}
-            >
-              <Lock className="w-4 h-4" /> My Space
-            </button>
-          </div>
+  <button
+    onClick={() => setActiveTab("space")}
+    className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-full text-sm font-bold transition
+      ${
+        activeTab === "space"
+          ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md"
+          : "text-gray-400 hover:text-blue-500"
+      }`}
+  >
+    <div className="relative w-4 h-4">
+      <Image
+        src="/images/lock.png"
+        alt="My Space"
+        fill
+        className={`object-contain ${
+          activeTab === "space" ? "opacity-100" : "opacity-60"
+        }`}
+      />
+    </div>
+    My Space
+  </button>
+</div>
 
           {/* ================= POSTS GRID ================= */}
           {isPosts && (
@@ -165,54 +214,87 @@ export default function TravelStoryPage() {
               })}
             </div>
           )}
+{/* ================= FRAMES GRID ================= */}
+{isFrames && (
+  <div className="pl-2">
 
-          {/* ================= FRAMES GRID ================= */}
-          {isFrames && (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pl-2">
-              {Array.from({ length: 12 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="relative overflow-hidden rounded-[49.26px]
-                  shadow-[0_10px_25px_rgba(0,0,0,0.35)]
-                  w-[200px] h-[200px]"
-                >
-                  <Image
-                    src={`/images/${(i % 4) + 1}.jpg`}
-                    alt="Frame"
-                    fill
-                    className="object-cover"
-                  />
+    {/* 🔘 PUBLIC / PRIVATE PILLS */}
+    <div className="flex gap-3 justify-center mb-6">
+      <button
+        onClick={() => setFrameVisibility("public")}
+        className={`px-5 py-2 rounded-full text-sm  transition
+          ${
+            frameVisibility === "public"
+              ? "bg-gradient-to-r from-[#6CACDF] to-[#0000FE] text-white shadow-md"
+              : "bg-blue-100 text-gray-400 border border-gray-200 hover:text-black"
+          }`}
+      >
+        Public
+      </button>
 
-                  <div className="absolute inset-6 rounded-[40px] border-4 border-black/40 overflow-hidden">
-                    <Image
-                      src={`/images/${((i + 1) % 4) + 1}.jpg`}
-                      alt="Inner Frame"
-                      fill
-                      className="object-cover opacity-90"
-                    />
-                  </div>
+      <button
+        onClick={() => setFrameVisibility("private")}
+        className={`px-5 py-2 rounded-full text-sm transition
+          ${
+            frameVisibility === "private"
+              ? "bg-gradient-to-r  from-[#6CACDF] to-[#0000FE] text-white shadow-md"
+              : "bg-blue-100 text-gray-400 border border-gray-200 hover:text-black"
+          }`}
+      >
+        Private
+      </button>
+    </div>
 
-                  <div className="absolute inset-0 shadow-[inset_0_0_0_8px_rgba(0,0,0,0.35)] rounded-[49.26px]" />
+    {/* 🖼️ FRAMES GRID */}
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {Array.from({ length: 12 }).map((_, i) => (
+        <div
+          key={i}
+          className="relative overflow-hidden rounded-[49.26px]
+          shadow-[0_10px_25px_rgba(0,0,0,0.35)]
+          w-[200px] h-[200px]"
+        >
+          <Image
+            src={`/images/${(i % 4) + 1}.jpg`}
+            alt="Frame"
+            fill
+            className="object-cover"
+          />
 
-                  <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
-                    <div className="relative w-[170px] h-[170px] rounded-[30px] overflow-hidden border border-white/20">
-                      <Image
-                        src={`/images/${((i + 2) % 4) + 1}.jpg`}
-                        alt="Mini"
-                        fill
-                        className="object-cover opacity-80"
-                      />
-                    </div>
-                  </div>
+          <div className="absolute inset-6 rounded-[40px] border-4 border-black/40 overflow-hidden">
+            <Image
+              src={`/images/${((i + 1) % 4) + 1}.jpg`}
+              alt="Inner Frame"
+              fill
+              className="object-cover opacity-90"
+            />
+          </div>
 
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-                    <div className="text-3xl font-bold">15+</div>
-                    <div className="text-sm mt-1">Frame Name</div>
-                  </div>
-                </div>
-              ))}
+          <div className="absolute inset-0 shadow-[inset_0_0_0_8px_rgba(0,0,0,0.35)] rounded-[49.26px]" />
+
+          <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
+            <div className="relative w-[170px] h-[170px] rounded-[30px] overflow-hidden border border-white/20">
+              <Image
+                src={`/images/${((i + 2) % 4) + 1}.jpg`}
+                alt="Mini"
+                fill
+                className="object-cover opacity-80"
+              />
             </div>
-          )}
+          </div>
+
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+            <div className="text-3xl font-bold">15+</div>
+            <div className="text-sm mt-1">
+              {frameVisibility === "public" ? "Public Frame" : "Private Frame"}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
 
 
           {/* ================= FRAMES GRID ================= */}
@@ -245,6 +327,7 @@ export default function TravelStoryPage() {
 
         </section>
       </div>
+    </div>
     </div>
   );
 }

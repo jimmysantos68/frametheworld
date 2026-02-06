@@ -66,7 +66,7 @@ const [isFrameType, setIsFrameType] = useState<"public" | "private" | "personal"
     { icon: Globe, label: "Public frames", hasArrow: true , func:()=> setIsFrameType("public") },
     { icon: Lock, label: "Private frames", hasArrow: true , func:()=> setIsFrameType("private") },
     { icon: Pin, label: "Personal Storage", hasArrow: true , func:()=> setIsFrameType("personal") },
-    { icon: Sparkles, label: "AI Content generator", hasArrow: false },
+    { icon: Sparkles, label: "AI Content generator", hasArrow: false, route: "/AiGenerator" },
     { icon: Settings, label: "Settings", hasArrow: false },
     { icon: LogOut, label: "Logout", hasArrow: false, isDestructive: true },
   ];
@@ -197,7 +197,8 @@ const [isFrameType, setIsFrameType] = useState<"public" | "private" | "personal"
         </div>
       </header>
 
-      {/* Mega Menu */}
+    
+
       {isMenuOpen && (
         <div 
           ref={megaMenuRef}
@@ -206,7 +207,12 @@ const [isFrameType, setIsFrameType] = useState<"public" | "private" | "personal"
         >
           <div className="flex h-[30em]">
             {/* Left Sidebar */}
-            <div className="w-80 bg-gray-50 rounded-bl-3xl border-r border-gray-200 overflow-y-auto scrollbar-hidden">
+
+
+<div className="grid grid-cols-4 ">
+
+
+            <div className="w-[20em] col-span-1 bg-gray-50 rounded-bl-3xl border-r border-gray-200 overflow-y-auto scrollbar-hidden">
               <div className="p-6 space-y-2">
                 {sidebarItems.map((item, index) => {
                   const Icon = item.icon;
@@ -226,7 +232,7 @@ const [isFrameType, setIsFrameType] = useState<"public" | "private" | "personal"
                     <button
                       key={index}
                       onClick={handleClick}
-                      className={`w-full flex items-center justify-between px-4 py-3 text-left rounded-xl hover:bg-gray-100 transition-all ${item.isDestructive
+                      className={`w-full flex items-center  justify-between px-4 py-3 text-left rounded-xl hover:bg-gray-100 transition-all ${item.isDestructive
                         ? "bg-red-50 hover:bg-red-100"
                         : ""
                         }`}
@@ -251,16 +257,18 @@ const [isFrameType, setIsFrameType] = useState<"public" | "private" | "personal"
             </div>
 
 
-            <div className="w-full">
+            <div className="w-[68em] col-span-3  flex flex-col items-center justify-center ">
 
               {/* Right Content Area */}
               <div className="flex-1 p-7 bg-white rounded-br-3xl flex items-start justify-center">
-                <div className="w-full max-w-5xl flex items-center gap-6">
+                <div className=" w-full flex items-center justify-center gap-6">
                   {/* Top Cards */}
                   <div className="flex gap-4 flex-1">
                     {contentCards.map((card, index) => {
                       return (
-                        <div
+                        <button
+                          type="button"
+                          onClick={() => console.log("Card clicked:", card.title)}
                           key={index}
                           className="flex-1 bg-[#FAFAFA] rounded-full p-0 items-center shadow-md hover:shadow-lg transition-all cursor-pointer border border-gray-100"
                         >
@@ -279,7 +287,7 @@ const [isFrameType, setIsFrameType] = useState<"public" | "private" | "personal"
                               <p className="text-[12px] text-gray-500">{card.subtitle}</p>
                             </div>
                           </div>
-                        </div>
+                        </button>
                       );
                     })}
                   </div>
@@ -293,7 +301,7 @@ const [isFrameType, setIsFrameType] = useState<"public" | "private" | "personal"
                       width={70}
                       height={70}
                       className="rounded-full border-7 border-blue-600"
-                    />
+                      />
                   </div>
 
 
@@ -329,7 +337,7 @@ const [isFrameType, setIsFrameType] = useState<"public" | "private" | "personal"
                   </div>
                   <button
   onClick={() => {
-    router.push("/Publicframes");
+    router.push("/Profile");
     setIsMenuOpen(false);
     setIsFrameType(null);
   }}
@@ -418,25 +426,29 @@ const [isFrameType, setIsFrameType] = useState<"public" | "private" | "personal"
                   <button  className="w-[90px] text-[16px] font-[500] text-center bg-[#F5F5F5]  py-1 rounded-full text-black">See All</button>
                 </div>
                ): (
-                <div className="w-full flex justify-center items-center absolute bottom-0 left-30">
+                <div className="w-full flex justify-center items-center  bottom-0 ">
+                  <div className="w-full flex items-center justify-center ">
+
                 <Image
                   src="/images/menuimage.png"
                   alt="Notification"
                   height={860}
                   width={860}
-                />
+                  />
                 
+                  </div>
                 </div>
               )}
 
             </div>
-
+</div>
 
           </div>
 
         </div>
       )}
 
+      
       {/* Notification Modal */}
       <NotificationModal
         isOpen={isNotificationOpen}
