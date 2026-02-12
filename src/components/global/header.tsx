@@ -67,7 +67,7 @@ const [isFrameType, setIsFrameType] = useState<"public" | "private" | "personal"
     { icon: Lock, label: "Private frames", hasArrow: true , func:()=> setIsFrameType("private") },
     { icon: Pin, label: "Personal Storage", hasArrow: true , func:()=> setIsFrameType("personal") },
     { icon: Sparkles, label: "AI Content generator", hasArrow: false, route: "/AiGenerator" },
-    { icon: Settings, label: "Settings", hasArrow: false },
+    { icon: Settings, label: "Settings", hasArrow: false, route: "/settings" },
     { icon: LogOut, label: "Logout", hasArrow: false, isDestructive: true },
   ];
 
@@ -147,53 +147,56 @@ const [isFrameType, setIsFrameType] = useState<"public" | "private" | "personal"
           </div>
 
           {/* Right side - User info and actions */}
-          <div className="flex items-center gap-6">
-            {/* User profile with level badge */}
-            <div className="flex items-center gap-2">
-              <Image
-                src="/images/admin.png"
-                alt="User"
-                width={60}
-                height={60}
-                className="rounded-full"
-              />
-              <span className="font-medium text-sm text-gray-900">Leo Denzin</span>
-              {/* Level Badge */}
-              <div className="relative">
-                <Image
-                  src="/images/awarrd.png"
-                  alt="Award"
-                  width={36}
-                  height={36}
-                  className="rounded-full"
-                />
-              </div>
-            </div>
+         <div className="flex items-center gap-6">
+  {/* User profile with level badge */}
+  <Link href="/Profile">
+    <div className="flex items-center gap-2 cursor-pointer">
+      <Image
+        src="/images/admin.png"
+        alt="User"
+        width={60}
+        height={60}
+        className="rounded-full"
+      />
+      <span className="font-medium text-sm text-gray-900">Leo Denzin</span>
+      {/* Level Badge */}
+      <div className="relative">
+        <Image
+          src="/images/awarrd.png"
+          alt="Award"
+          width={36}
+          height={36}
+          className="rounded-full"
+        />
+      </div>
+    </div>
+  </Link>
 
-            {/* Search button */}
-            <Link href="/search">
-              <Image
-                src="/images/search.png"
-                alt="Search"
-                height={50}
-                width={50}
-                className="cursor-pointer"
-              />
-            </Link>
+  {/* Search button */}
+  <Link href="/search">
+    <Image
+      src="/images/search.png"
+      alt="Search"
+      height={50}
+      width={50}
+      className="cursor-pointer"
+    />
+  </Link>
 
-            {/* Bell button */}
-            <button
-              onClick={() => setIsNotificationOpen(!isNotificationOpen)}
-              className="cursor-pointer"
-            >
-              <Image
-                src="/images/notifaction.png"
-                alt="Notification"
-                height={50}
-                width={50}
-              />
-            </button>
-          </div>
+  {/* Bell button */}
+  <button
+    onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+    className="cursor-pointer"
+  >
+    <Image
+      src="/images/notifaction.png"
+      alt="Notification"
+      height={50}
+      width={50}
+    />
+  </button>
+</div>
+
         </div>
       </header>
 
@@ -259,58 +262,58 @@ const [isFrameType, setIsFrameType] = useState<"public" | "private" | "personal"
 
             <div className="w-[68em] col-span-3  flex flex-col items-center justify-center ">
 
-              {/* Right Content Area */}
-              <div className="flex-1 p-7 bg-white rounded-br-3xl flex items-start justify-center">
-                <div className=" w-full flex items-center justify-center gap-6">
-                  {/* Top Cards */}
-                  <div className="flex gap-4 flex-1">
-                    {contentCards.map((card, index) => {
-                      return (
-                        <button
-                          type="button"
-                          onClick={() => console.log("Card clicked:", card.title)}
-                          key={index}
-                          className="flex-1 bg-[#FAFAFA] rounded-full p-0 items-center shadow-md hover:shadow-lg transition-all cursor-pointer border border-gray-100"
-                        >
-                          <div className="flex items-center text-left gap-0">
-                            <div className="w-12 h-12 rounded-full bg-blue-100 border border-blue-300 flex items-center justify-center m-2">
-                              <Image
-                                src={card.image}
-                                alt={card.title}
-                                width={20}
-                                height={20}
-                                className="object-contain"
-                              />
-                            </div>
-                            <div>
-                              <h3 className="font-bold text-gray-900 text-[14px] mb-0">{card.title}</h3>
-                              <p className="text-[12px] text-gray-500">{card.subtitle}</p>
-                            </div>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {/* User Profile on Right */}
-                 
-                  <div className="flex-shrink-0">
-                    <Image
-                      src="/images/admin.png"
-                      alt="User"
-                      width={70}
-                      height={70}
-                      className="rounded-full border-7 border-blue-600"
-                      />
-                  </div>
-
-
-
-                </div>
+          {/* Right Content Area */}
+<div className="flex-1 p-7 bg-white rounded-br-3xl flex items-start justify-center">
+  <div className="w-full flex items-center justify-center gap-6">
+    {/* Top Cards */}
+    <div className="flex gap-4 flex-1">
+      {contentCards.map((card, index) => {
+        return (
+          <button
+            type="button"
+            onClick={() => console.log("Card clicked:", card.title)}
+            key={index}
+            className="flex-[0_1_30%] bg-[#FAFAFA] rounded-full p-1 pr-2 pl-2 items-center hover:shadow-lg transition-all cursor-pointer border border-gray-100"
+          >
+            <div className="flex items-center text-left gap-2">  {/* Reduced gap here */}
+              <div className="w-12 h-12 rounded-full bg-blue-100 border border-blue-300 flex items-center justify-center p-2">
+                <Image
+                  src={card.image}
+                  alt={card.title}
+                  width={20}
+                  height={20}
+                  className="object-contain"
+                />
               </div>
+              <div className="flex flex-col">
+                <h3 className="font-bold text-gray-900 text-[14px] mb-0 whitespace-nowrap pr-2">{card.title}</h3>
+                <p className="text-[12px] text-gray-500 whitespace-nowrap">{card.subtitle}</p>
+              </div>
+            </div>
+          </button>
+        );
+      })}
+    </div>
+
+    {/* User Profile on Right */}
+    <Link href="/Profile">
+    <div className="flex-shrink-0">
+      <Image
+        src="/images/admin.png"
+        alt="User"
+        width={70}
+        height={70}
+        className="rounded-full border-7 border-blue-600"
+      />
+    </div>
+    </Link>
+  </div>
+</div>
+
+
 
                {isFrameType === "public" ? (
-               <div className=" flex flex-col justify-center items-center gap-4">
+               <div className=" flex flex-col justify-center items-center gap-4 mb-36">
                   <div className="flex justify-center items-center gap-6">
 
                   {frames.map((frame) => (
@@ -319,7 +322,7 @@ const [isFrameType, setIsFrameType] = useState<"public" | "private" | "personal"
                     className="shrink-0 flex flex-col items-center "
                     >
                 {/* Image Container */}
-                <div className="relative w-[100px] h-[100px] rounded-[22px] overflow-hidden">
+                <div className="relative w-[120px] h-[120px] rounded-[22px] overflow-hidden">
                   <Image
                     src={frame.image}
                     alt={frame.name}
@@ -348,7 +351,7 @@ const [isFrameType, setIsFrameType] = useState<"public" | "private" | "personal"
                 </div>
                 
               )  : isFrameType === "private" ? (
-                <div className=" flex flex-col justify-center items-center gap-4">
+                <div className=" flex flex-col justify-center items-center gap-4 mb-36">
                   <div className="flex justify-center items-center gap-6">
 
                   {frames.map((frame) => (
@@ -357,7 +360,7 @@ const [isFrameType, setIsFrameType] = useState<"public" | "private" | "personal"
                     className="shrink-0 flex flex-col items-center "
                     >
                 {/* Image Container */}
-                <div className="relative w-[100px] h-[100px] rounded-[22px] overflow-hidden">
+                <div className="relative w-[120px] h-[120px] rounded-[22px] overflow-hidden">
                   <Image
                     src={frame.image}
                     alt={frame.name}
@@ -373,11 +376,17 @@ const [isFrameType, setIsFrameType] = useState<"public" | "private" | "personal"
               </div>
                   ))}
                   </div>
-                  <button className="w-[90px] text-[16px] font-[500] text-center bg-[#F5F5F5]  py-1 rounded-full text-black">See All</button>
+                  <button 
+                    onClick={() => {
+    router.push("/Profile");
+    setIsMenuOpen(false);
+    setIsFrameType(null);
+  }}
+                  className="w-[90px] text-[16px] font-[500] text-center bg-[#F5F5F5]  py-1 rounded-full text-black">See All</button>
                 </div>
 
                ): isFrameType === "personal" ? (
-                <div className=" flex flex-col justify-center items-center gap-4">
+                <div className=" flex flex-col justify-center items-center gap-4 mb-36">
                   <div className="flex justify-center items-center gap-6">
 
                     {frames.map((frame) => (
@@ -423,7 +432,13 @@ const [isFrameType, setIsFrameType] = useState<"public" | "private" | "personal"
               </div>
             ))}
                   </div>
-                  <button  className="w-[90px] text-[16px] font-[500] text-center bg-[#F5F5F5]  py-1 rounded-full text-black">See All</button>
+                  <button
+                    onClick={() => {
+    router.push("/Profile");
+    setIsMenuOpen(false);
+    setIsFrameType(null);
+  }}
+    className="w-[90px] text-[16px] font-[500] text-center bg-[#F5F5F5]  py-1 rounded-full text-black">See All</button>
                 </div>
                ): (
                 <div className="w-full flex justify-center items-center  bottom-0 ">
