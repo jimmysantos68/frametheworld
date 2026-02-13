@@ -2,7 +2,6 @@
 
 import React from "react";
 import Image from "next/image";
-import { InfiniteMovingCards } from '@/components/ui/infinite-moving-cards';
 
 export default function MaintenancePage() {
   const columnOne = [
@@ -32,31 +31,6 @@ export default function MaintenancePage() {
           animation: scroll-vertical var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
         }
       `}</style>
-
-      {/* 2. Background Layer: Pinterest-style Vertical Columns */}
-      <div className="absolute inset-0 z-0 flex justify-center gap-4 px-4 opacity-40">
-        <InfiniteMovingCards
-          items={columnOne}
-          direction="top"
-          speed="slow"
-          orientation="vertical"
-          className="w-full md:w-1/3 scale-110"
-        />
-        <InfiniteMovingCards
-          items={columnTwo}
-          direction="bottom"
-          speed="normal"
-          orientation="vertical"
-          className="hidden md:block md:w-1/3 scale-125"
-        />
-        <InfiniteMovingCards
-          items={columnOne}
-          direction="top"
-          speed="fast"
-          orientation="vertical"
-          className="hidden lg:block lg:w-1/3 scale-110"
-        />
-      </div>
 
       {/* 3. Content Overlay */}
       <div className="relative z-10 flex h-full flex-col items-center justify-center bg-white/40 backdrop-blur-[100px] px-6 text-center">
