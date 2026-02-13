@@ -1,5 +1,10 @@
-import { redirect } from "next/navigation";
+import MaintenancePage from '@/components/global/comingsoon'
+import React from 'react'
 
-export default function RootPage() {
-  redirect("/comingsoon");
+const page = () => {
+  return (
+    <MaintenancePage />
+  )
 }
+
+export default page

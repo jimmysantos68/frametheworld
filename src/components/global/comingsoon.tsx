@@ -37,7 +37,7 @@ export default function MaintenancePage() {
         <div className="max-w-4xl">
           
           {/* Logo Container */}
-          <div className="mx-auto mb-10 relative h-24 w-24 md:h-32 md:w-32 transition-transform hover:rotate-3 duration-500">
+          <div className="mx-auto  relative h-50 w-50 md:h-32 md:w-32 transition-transform hover:rotate-3 duration-500">
              <div className="absolute inset-0 bg-blue-500/20 blur-3xl rounded-full animate-pulse" />
              <Image 
                 src="/images/logo1.png" 
@@ -65,7 +65,7 @@ export default function MaintenancePage() {
           </div>
 
           {/* Buttons & Status */}
-          <div className="mt-14 flex flex-col items-center gap-6 sm:flex-row sm:justify-center">
+          {/* <div className="mt-14 flex flex-col items-center gap-6 sm:flex-row sm:justify-center">
             <button className="w-full sm:w-auto rounded-2xl bg-blue-600 px-12 py-5 text-lg font-bold text-white transition-all hover:bg-blue-700 hover:shadow-[0_20px_40px_rgba(37,99,235,0.3)] hover:-translate-y-1 active:scale-95">
               Notify Me
             </button>
@@ -79,7 +79,7 @@ export default function MaintenancePage() {
                 System Optimizing
               </span>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Footer */}
