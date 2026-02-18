@@ -246,52 +246,63 @@ const badges = [
     </div>
 
     {/* 🖼️ FRAMES GRID */}
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {Array.from({ length: 12 }).map((_, i) => (
-        <div
-          key={i}
-          className="relative overflow-hidden rounded-[49.26px]
-          shadow-[0_10px_25px_rgba(0,0,0,0.35)]
-          w-[200px] h-[200px]"
-        >
-          <Image
-            src={`/images/${(i % 4) + 1}.jpg`}
-            alt="Frame"
-            fill
-            className="object-cover"
-          />
+   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+  {Array.from({ length: 12 }).map((_, i) => (
+    <div key={i} className="flex flex-col items-center">
+      
+      {/* Frame Card */}
+      <div
+        className="relative overflow-hidden rounded-[49.26px]
+        shadow-[0_10px_25px_rgba(0,0,0,0.35)]
+        w-[200px] h-[200px]"
+      >
+        <Image
+          src={`/images/${(i % 4) + 1}.jpg`}
+          alt="Frame"
+          fill
+          className="object-cover"
+        />
 
-          <div className="absolute inset-6 rounded-[40px] border-4 border-black/40 overflow-hidden">
+        <div className="absolute inset-6 rounded-[40px] border-4 border-black/40 overflow-hidden">
+          <Image
+            src={`/images/${((i + 1) % 4) + 1}.jpg`}
+            alt="Inner Frame"
+            fill
+            className="object-cover opacity-90"
+          />
+        </div>
+
+        <div className="absolute inset-0 shadow-[inset_0_0_0_8px_rgba(0,0,0,0.35)] rounded-[49.26px]" />
+
+        <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
+          <div className="relative w-[170px] h-[170px] rounded-[30px] overflow-hidden border border-white/20">
             <Image
-              src={`/images/${((i + 1) % 4) + 1}.jpg`}
-              alt="Inner Frame"
+              src={`/images/${((i + 2) % 4) + 1}.jpg`}
+              alt="Mini"
               fill
-              className="object-cover opacity-90"
+              className="object-cover opacity-80"
             />
           </div>
-
-          <div className="absolute inset-0 shadow-[inset_0_0_0_8px_rgba(0,0,0,0.35)] rounded-[49.26px]" />
-
-          <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
-            <div className="relative w-[170px] h-[170px] rounded-[30px] overflow-hidden border border-white/20">
-              <Image
-                src={`/images/${((i + 2) % 4) + 1}.jpg`}
-                alt="Mini"
-                fill
-                className="object-cover opacity-80"
-              />
-            </div>
-          </div>
-
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-            <div className="text-3xl font-bold">15+</div>
-            <div className="text-sm mt-1">
-              {frameVisibility === "public" ? "Public Frame" : "Private Frame"}
-            </div>
-          </div>
         </div>
-      ))}
+
+        {/* Optional: Keep only the count inside */}
+        <div className="absolute inset-0 flex items-center justify-center text-white">
+          <div className="text-3xl font-bold pt-20">15+</div>
+        </div>
+      </div>
+
+      {/* Frame Name BELOW */}
+      <div className="mt-4 text-center">
+        <div className="text-[16px] font-semibold text-gray-800">
+          Frame Name
+        </div>
+      
+      </div>
+
     </div>
+  ))}
+</div>
+
   </div>
 )}
 

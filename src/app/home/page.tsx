@@ -2,13 +2,41 @@
 
 import Image from "next/image";
 import { Bookmark } from "lucide-react";
-import { useState } from "react";
 import Header from "@/components/global/header";
+import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+
 
 export default function TravelStoryPage() {
   const [activeTab, setActiveTab] = useState<"forYou" | "featured" | "frames">("forYou");
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [isDown, setIsDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   const isFrames = activeTab === "frames";
+  const router = useRouter();
+
+
+
+const handleMouseDown = (e: React.MouseEvent) => {
+    if (!sliderRef.current) return;
+    setIsDown(true);
+    setStartX(e.pageX - sliderRef.current.offsetLeft);
+    setScrollLeft(sliderRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => setIsDown(false);
+  const handleMouseUp = () => setIsDown(false);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDown || !sliderRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - sliderRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5; // scroll speed multiplier
+    sliderRef.current.scrollLeft = scrollLeft - walk;
+  };
+
 
   return (
     <div className="min-h-screen backdrop-blur-3xl bg-blur-15">
@@ -19,43 +47,52 @@ export default function TravelStoryPage() {
 
       {/* Story Slider */}
       <section
-        className="
-          flex flex-nowrap gap-4 px-6 pb-4 mb-6
-          overflow-x-auto
-          overscroll-x-contain
-          scroll-smooth
-          snap-x snap-mandatory
-          [&::-webkit-scrollbar]:hidden
-          [-ms-overflow-style:none]
-          [scrollbar-width:none]
-        "
-      >
-        {[25, 15, 25, 15, 20].map((item, i) => (
-          <div
-            key={i}
-            className="
-              shrink-0
-              snap-start
-              min-w-[343px] h-[120px]
-              rounded-4xl
-              bg-gray-900
-              relative overflow-hidden
-              shadow
-            "
-          >
-            <Image
-              src="/images/2.jpg"
-              alt="Story"
-              fill
-              className="object-cover opacity-80"
-            />
-            <div className="absolute inset-0 p-4 flex flex-col justify-between">
-              <span className="text-white text-2xl font-bold">{item}+</span>
-              <span className="text-sm text-gray-200">Frame name here</span>
-            </div>
+      ref={sliderRef}
+      onMouseDown={handleMouseDown}
+      onMouseLeave={handleMouseLeave}
+      onMouseUp={handleMouseUp}
+      onMouseMove={handleMouseMove}
+        onClick={() => router.push("/framedetails")}
+
+      className="
+        flex flex-nowrap gap-4 px-6 pb-4 mb-6
+        overflow-x-auto
+        cursor-grab active:cursor-grabbing
+        overscroll-x-contain
+        scroll-smooth
+        snap-x snap-mandatory
+        select-none
+        [&::-webkit-scrollbar]:hidden
+        [-ms-overflow-style:none]
+        [scrollbar-width:none]
+      "
+    >
+      {[25, 15, 25, 15, 20].map((item, i) => (
+        <div
+          key={i}
+          className="
+            shrink-0
+            snap-start
+            min-w-[343px] h-[120px]
+            rounded-4xl
+            bg-gray-900
+            relative overflow-hidden
+            shadow
+          "
+        >
+          <Image
+            src="/images/2.jpg"
+            alt="Story"
+            fill
+            className="object-cover opacity-80"
+          />
+          <div className="absolute inset-0 p-4 flex flex-col justify-between">
+            <span className="text-white text-2xl font-bold">{item}+</span>
+            <span className="text-sm text-gray-200">Frame name here</span>
           </div>
-        ))}
-      </section>
+        </div>
+      ))}
+    </section>
 
       {/* Tabs */}
       <div className="flex justify-center gap-3 mb-8">
@@ -96,7 +133,9 @@ export default function TravelStoryPage() {
           {Array.from({ length: 12 }).map((_, i) => (
             <div
               key={i}
-              className="relative overflow-hidden rounded-[49.26px] shadow-[0_10px_25px_rgba(0,0,0,0.35)] w-[254px] h-[254px]"
+                          onClick={() => router.push("/framedetails")}
+
+              className="relative overflow-hidden cursor-pointer rounded-[49.26px] shadow-[0_10px_25px_rgba(0,0,0,0.35)] w-[254px] h-[254px]"
             >
               {/* Outer Image */}
               <Image
@@ -147,7 +186,9 @@ export default function TravelStoryPage() {
       {/* Masonry Grid (default for other tabs) */}
       {!isFrames && (
         <div className="max-w-[1400px] mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-[120px] gap-6">
+          <div                           onClick={() => router.push("/postdetails")}
+
+           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-[120px] gap-6 cursor-pointer">
             {Array.from({ length: 20 }).map((_, i) => {
               const isTall = i % 5 === 0 || i % 7 === 0;
 
