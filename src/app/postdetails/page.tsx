@@ -1,21 +1,20 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowLeft, EllipsisVertical, Bookmark } from "lucide-react";
+import { ArrowLeft, EllipsisVertical, Bookmark, MapPin, ArrowBigUpDash, Download } from "lucide-react";
 import Header from "@/components/global/header";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import SaveModal from "@/components/global/SaveModal"; // ✅ adjust path if needed
+import SaveModal from "@/components/global/SaveModal";
 
 export default function PostDetails() {
   const router = useRouter();
-  const [isSaveOpen, setIsSaveOpen] = useState(false); // ✅ modal state
+  const [isSaveOpen, setIsSaveOpen] = useState(false);
 
   return (
     <div className="min-h-screen backdrop-blur-3xl bg-blur-15">
       <Header />
 
-      {/* ✅ SAVE MODAL */}
       <SaveModal
         isOpen={isSaveOpen}
         onClose={() => setIsSaveOpen(false)}
@@ -42,49 +41,69 @@ export default function PostDetails() {
           </div>
 
           <div className="px-2">
-            <h2 className="text-lg font-semibold">Eiffel Tower</h2>
-            <p className="text-sm text-gray-500 mb-4">
-              #selfie, #tower, #land, #history
+            {/* Title and Location Row */}
+            <div className="flex items-center justify-between mb-1">
+              <h2 className="text-2xl font-bold text-gray-900">Eiffel Tower</h2>
+              <div className="flex items-center gap-1 text-gray-800">
+                <MapPin className="w-4 h-4" />
+                <span className="text-sm font-semibold">Paris, France</span>
+              </div>
+            </div>
+
+            {/* Tags */}
+            <p className="text-sm text-gray-400 mb-6">
+              #Eiffel, #Tower, #land, #history
             </p>
 
+            {/* Profile and Actions Row */}
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-full overflow-hidden">
-                  <Image
-                    src="/images/1.jpg"
-                    alt="Author"
-                    width={40}
-                    height={40}
-                    className="object-cover"
-                  />
-                </div>
-                <span className="text-sm font-medium">
-                  David Smith
-                </span>
-              </div>
+              {/* Profile */}
+             <div className="flex items-center gap-3">
+  {/* Profile */}
+  <div className="relative w-10 h-10 rounded-full overflow-hidden">
+    <Image
+      src="/images/2.jpg"
+      alt="Author"
+      fill
+      className="object-cover"
+    />
+  </div>
+  <span className="text-md font-bold text-gray-900">
+    David Smith
+  </span>
+</div>
 
-              <div className="flex gap-2">
-                <button className="px-3 py-3 text-blue-500 rounded-full border border-blue-500 text-xs font-semibold">
-                  ↑ 256
+              {/* Actions */}
+              <div className="flex items-center gap-3">
+                {/* Upvote Button */}
+                <button className="flex items-center gap-2 px-4 py-2.5 rounded-full border-[1.5px] border-blue-500 text-blue-500 hover:bg-blue-50 transition">
+                  <ArrowBigUpDash className="w-5 h-5 fill-current" />
+                  <span className="font-bold">256</span>
                 </button>
 
-                <button className="px-3 py-1 rounded-full text-white border bg-blue-500 text-xs font-semibold">
-                  ↓ 256
-                </button>
-
-                {/* ✅ OPEN MODAL HERE */}
-                <button
+                {/* Save/Download Button */}
+                <button 
                   onClick={() => setIsSaveOpen(true)}
-                  className="px-2 py-1 rounded-full text-blue-500 border border-blue-500 text-xs font-semibold"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-blue-500 text-white shadow-lg shadow-blue-200 hover:bg-blue-600 transition"
                 >
-                  <EllipsisVertical />
+                  <Download className="w-5 h-5" />
+                  <span className="font-bold">256</span>
+                </button>
+
+                {/* More Options Button */}
+                <button
+                                    onClick={() => setIsSaveOpen(true)}
+
+                  className="w-11 h-11 flex items-center justify-center rounded-full bg-blue-500 text-white shadow-lg shadow-blue-200 hover:bg-blue-600 transition"
+                >
+                  <EllipsisVertical className="w-6 h-6" />
                 </button>
               </div>
             </div>
           </div>
         </div>
 
-        {/* RIGHT SIDE (unchanged) */}
+        {/* RIGHT SIDE */}
         <div>
           <h3 className="text-lg font-semibold mb-6">
             More related to explore!
@@ -107,7 +126,10 @@ export default function PostDetails() {
                     className="object-cover"
                   />
 
-                  <button className="absolute top-3 right-3 h-9 w-9 rounded-full bg-white/80 backdrop-blur flex items-center justify-center shadow">
+                  <button 
+                    onClick={() => setIsSaveOpen(true)}
+                    className="absolute top-3 right-3 h-9 w-9 rounded-full bg-white/80 backdrop-blur flex items-center justify-center shadow"
+                  >
                     <Bookmark className="h-4 w-4 text-gray-700" />
                   </button>
                 </div>

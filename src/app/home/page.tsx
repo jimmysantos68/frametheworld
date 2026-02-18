@@ -5,6 +5,7 @@ import { Bookmark } from "lucide-react";
 import Header from "@/components/global/header";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import SaveModal from "@/components/global/SaveModal"; // ✅ adjust path if needed
 
 
 export default function TravelStoryPage() {
@@ -13,6 +14,8 @@ export default function TravelStoryPage() {
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [isSaveOpen, setIsSaveOpen] = useState(false); // State to control modal visibility
+
 
   const isFrames = activeTab === "frames";
   const router = useRouter();
@@ -205,9 +208,16 @@ const handleMouseDown = (e: React.MouseEvent) => {
                     className="object-cover"
                   />
 
-                  <button className="absolute top-3 right-3 h-9 w-9 rounded-full bg-white/80 backdrop-blur flex items-center justify-center shadow">
-                    <Bookmark className="h-4 w-4 text-gray-700" />
-                  </button>
+                 <button
+  onClick={(e) => {
+    e.stopPropagation(); // Prevent card navigation
+    setIsSaveOpen(true); // Open SaveModal
+  }}
+  className="absolute top-3 right-3 h-9 w-9 rounded-full bg-white/80 backdrop-blur flex items-center justify-center shadow"
+>
+  <Bookmark className="h-4 w-4 text-gray-700" />
+</button>
+
                 </div>
               );
             })}
@@ -216,6 +226,10 @@ const handleMouseDown = (e: React.MouseEvent) => {
       )}
 
       </div>
+      <SaveModal
+  isOpen={isSaveOpen} // Control modal visibility
+  onClose={() => setIsSaveOpen(false)} // Close modal when clicking outside or pressing X
+/>
     </div>
   );
 }
